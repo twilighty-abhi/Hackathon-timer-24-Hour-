@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    #countdown-container {
+      text-align: center;
+    }
+
+    #progress-bar-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    #progress-bar {
+      width: 80%;
+      height: 20px;
+    }
+
+    #countdown {
+      font-size: 64px;
+      color: #333;
+    }
+
+    #abstract-elements {
+      font-size: 32px;
+      color: #ff6600;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">Make A Ton Ends in:</h2>
+    <div id="countdown-container">
+      <div id="countdown">Loading...</div>
+      <div id="progress-bar-container">
+        <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <div id="abstract-elements">
+        🌟 🎨 ✨
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Calculate the timestamp for tomorrow at 11 AM
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 1);
+    targetDate.setHours(11, 0, 0, 0);
+
+    function updateCountdown() {
+      const now = new Date();
+      const timeDifference = targetDate - now;
+
+      if (timeDifference <= 0) {
+        document.getElementById("countdown").innerHTML = "Countdown Expired!";
+        document.getElementById("progress-bar").style.width = "100%";
+      } else {
+        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+        const progressBarWidth = ((24 * 60 * 60 - timeDifference) / (24 * 60 * 60)) * 100;
+        document.getElementById("progress-bar").style.width = progressBarWidth + "%";
+
+        document.getElementById("countdown").innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+      }
+    }
+
+    // Update the countdown and progress bar every second
+    const countdownInterval = setInterval(updateCountdown, 1000);
+
+    // Ensure the countdown updates immediately upon page load
+    updateCountdown();
+  </script>
+</body>
+</html>
